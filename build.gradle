@@ -246,77 +246,43 @@ project('tools') {
 project('spring-nanotrader-services') {
 	apply plugin: 'war'
 
-	description = 'Spring Nanotrader Services'
-	dependencies {
-		compile project(":spring-nanotrader-service-support")
-		compile project(":spring-nanotrader-chaos")
-		compile "org.springframework:spring-webmvc:$springVersion"
-		providedCompile  ("javax.servlet:servlet-api:$servletApiVersion")
-		compile "com.jayway.jsonpath:json-path:0.8.1"
-		compile "cglib:cglib-nodep:$cglibVersion"
-		compile "org.springframework.security:spring-security-web:$springSecurityVersion" 
-		compile "org.springframework.security:spring-security-config:$springSecurityVersion" 
-		compile "org.codehaus.jackson:jackson-mapper-asl:1.8.5"
-		compile "javax.inject:javax.inject:$javaxInjectVersion"
-		compile "net.sf.dozer:dozer:$dozerVersion"
-		testCompile "org.springframework:spring-test-mvc:1.0.0.BUILD-SNAPSHOT"
-		testCompile "org.hamcrest:hamcrest-all:1.1"
-		compile "org.aspectj:aspectjweaver:$aspectjVersion"
-	}
-        task release(dependsOn: assemble) << {
-            copy {
-                description "Copy artifacts to $rootDir/dist"
-                from war.archivePath
-                into file("$rootDir/dist") 
-            }
-        }
-}
-
-/* Very temporary - hack!! cdavis@gopivotal.com
-
-In order to deploy this to cloud foundry, which will deploy each application to a different
-domain, hacking this to pull the services tier into the same war as the web tier.  We're 
-devising a real solution in parallel with hitting a deadline. */
-
-project('spring-nanotrader-web') {
-	apply plugin: 'war'
 	description = 'Spring Nanotrader Web and Services'
-	dependencies {
-		compile project(":spring-nanotrader-services")
-		compile project(":spring-nanotrader-service-support")
-		compile project(":spring-nanotrader-chaos")
-		compile "org.springframework:spring-webmvc:$springVersion"
-		providedCompile  ("javax.servlet:servlet-api:$servletApiVersion")
-		compile "com.jayway.jsonpath:json-path:0.8.1"
-		compile "cglib:cglib-nodep:$cglibVersion"
-		compile "org.springframework.security:spring-security-web:$springSecurityVersion" 
-		compile "org.springframework.security:spring-security-config:$springSecurityVersion" 
-		compile "org.codehaus.jackson:jackson-mapper-asl:1.8.5"
-		compile "javax.inject:javax.inject:$javaxInjectVersion"
-		compile "net.sf.dozer:dozer:$dozerVersion"
-		testCompile "org.springframework:spring-test-mvc:1.0.0.BUILD-SNAPSHOT"
-		testCompile "org.hamcrest:hamcrest-all:1.1"
-		compile "org.aspectj:aspectjweaver:$aspectjVersion"
-	}
+	/* TODO: not sure what the tar file is used for - this is not right as it will not have the 
+	         correct web.xml 
 	task tar(type: Tar) {
-	  from 'src/main/webapp'
+	  from '../spring-nanotrader-web/src/main/webapp'
 	  compression = Compression.GZIP
           destinationDir = file("build/libs")
 	}
 	artifacts {
 	    archives tar
+	}*/
+	dependencies {
+	    compile project(":spring-nanotrader-web")
+		compile project(":spring-nanotrader-service-support")
+		compile project(":spring-nanotrader-chaos")
+		compile "org.springframework:spring-webmvc:$springVersion"
+		providedCompile  ("javax.servlet:servlet-api:$servletApiVersion")
+		compile "com.jayway.jsonpath:json-path:0.8.1"
+		compile "cglib:cglib-nodep:$cglibVersion"
+		compile "org.springframework.security:spring-security-web:$springSecurityVersion" 
+		compile "org.springframework.security:spring-security-config:$springSecurityVersion" 
+		compile "org.codehaus.jackson:jackson-mapper-asl:1.8.5"
+		compile "javax.inject:javax.inject:$javaxInjectVersion"
+		compile "net.sf.dozer:dozer:$dozerVersion"
+		testCompile "org.springframework:spring-test-mvc:1.0.0.BUILD-SNAPSHOT"
+		testCompile "org.hamcrest:hamcrest-all:1.1"
+		compile "org.aspectj:aspectjweaver:$aspectjVersion"
 	}
         task release(dependsOn: assemble) << {
             copy {
                 description "Copy artifacts to $rootDir/dist"
                 from war.archivePath
-                from tar.archivePath
                 into file("$rootDir/dist") 
             }
         }
 }
 
-/* original 
 project('spring-nanotrader-web') {
 	apply plugin: 'war'
 	description = 'Spring Nanotrader Web'
@@ -337,7 +303,7 @@ project('spring-nanotrader-web') {
             }
         }
 }
-*/
+
 
 project('spring-nanotrader-asynch-services') {
 	apply plugin: 'war'
