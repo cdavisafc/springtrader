@@ -257,6 +257,14 @@ project('spring-nanotrader-services') {
 	artifacts {
 	    archives tar
 	}*/
+	
+	war {
+		from ("../spring-nanotrader-web/src/main/webapp") {
+			into (".")
+			exclude('**/web.xml')
+		}
+	}
+	
 	dependencies {
 	    compile project(":spring-nanotrader-web")
 		compile project(":spring-nanotrader-service-support")
@@ -290,6 +298,7 @@ project('spring-nanotrader-web') {
 	  from 'src/main/webapp'
 	  compression = Compression.GZIP
           destinationDir = file("build/libs")
+		  //destinationDir = file("../spring-nanotrader-services/src/main/webapp")
 	}
 	artifacts {
 	    archives tar
