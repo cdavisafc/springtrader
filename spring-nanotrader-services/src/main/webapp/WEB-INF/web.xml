@@ -69,5 +69,10 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 	
+	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>production</param-value>
+	</context-param>
+	
 
 </web-app>
