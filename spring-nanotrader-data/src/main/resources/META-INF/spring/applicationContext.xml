@@ -7,13 +7,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:cloud="http://www.springframework.org/schema/cloud"	
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd">
 	<!-- This will automatically locate any and all property files you have 
 		within your classpath, provided they fall under the META-INF/spring directory. 
 		The located property files are parsed and their values can then be used within 
@@ -54,15 +56,24 @@
 			type="annotation" />
 	</context:component-scan>
 
+	 
 	<bean class="org.springframework.orm.jpa.JpaTransactionManager"
 		id="transactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
+
+    <cloud:rabbit-connection-factory />
 
 	<import
 		resource="classpath:/META-INF/spring/integration/amqp-data-outbound-context.xml" />
 
+    <cloud:data-source id="dataSource" service-name="nanotrader-mysql-service">
+  		<cloud:connection properties="sessionVariables=sql_mode='ANSI';characterEncoding=UTF-8;defaultTransactionIsolation=2"/>
+    	<cloud:pool pool-size="20" max-wait-time="200"/>
+	</cloud:data-source>
+	
 	<bean
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		id="entityManagerFactory">

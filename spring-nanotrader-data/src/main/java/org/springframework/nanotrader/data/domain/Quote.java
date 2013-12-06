@@ -24,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
@@ -69,6 +70,9 @@ public class Quote implements Serializable {
 	@Column(name = "change1")
     @NotNull
     private BigDecimal change1;
+	
+    @Column(name = "version")
+    private int version = 0;
 
 	public BigDecimal getLow() {
         return low;
@@ -133,11 +137,15 @@ public class Quote implements Serializable {
 	public void setChange1(BigDecimal change1) {
         this.change1 = change1;
     }
+	
+	public int getVersion() {
+        return version;
+    }
 
 	@Override
 	public String toString() {
 		return "Quote [quoteid=" + quoteid + ", low=" + low + ", open1=" + open1 + ", volume=" + volume + ", price="
 				+ price + ", high=" + high + ", companyname=" + companyname + ", symbol=" + symbol + ", change1="
-				+ change1 + "]";
+				+ change1 + ", version=" + version + "]";
 	}
 }

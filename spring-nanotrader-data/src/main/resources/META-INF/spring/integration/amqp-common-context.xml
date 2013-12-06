@@ -18,19 +18,24 @@
 	
 
 		
-	<rabbit:connection-factory id="connectionFactory"
+<!-- When integrating with spring-cloud, creation of the rabbitmq connection
+	 factory is moved up into the application-context.xml
+		  	<rabbit:connection-factory id="connectionFactory"
 			host="${NANO_RABBIT_HOST:localhost}"
-			port="${NANO_RABBIT_PORT:5672}"/>
+			port="${NANO_RABBIT_PORT:5672}"/> -->
+			
+
 	
 	<!--  Enable clustered rabbit brokers by adding "clusteredRabbit" 
 		  to the catalina.properties property spring.active.profiles. 
 		  If enabled, this will override the connectionFactory bean above.
 	 -->
+<!--  No support for clustered rabbit for now
 	<beans profile="clusteredRabbit">
 	  
 	    <rabbit:connection-factory  id="connectionFactory" 
     			addresses="${NANO_RABBIT_HOSTS:localhost:5679}"/>
-	</beans>
+	</beans> -->
 	
 	<beans >
     
