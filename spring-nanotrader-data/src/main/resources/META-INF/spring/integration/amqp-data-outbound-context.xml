@@ -16,7 +16,7 @@
 
 	<int:gateway default-request-channel="quoteToAmqpChannel"
 		service-interface="org.springframework.nanotrader.data.service.TradingServiceImpl$QuotePublisher"
-		error-channel="quoteErrors" />
+		error-channel="quoteErrors" id="quoteToAmqpID" />
 
 	<int:channel id="quoteToAmqpChannel" />
 
