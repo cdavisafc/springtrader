@@ -101,7 +101,8 @@
 		<util:properties id="dbPropertiesBean">
 			<prop key="use_scrollable_resultset">false</prop>
 			<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
-			<prop key="hb2ddl.auto">create</prop>
+			<prop key="hb2ddl.auto">create-drop</prop>
+			<prop key="hbm2ddl.import_files">import.sql</prop>
 		</util:properties>
 
 	<beans profile="default,test">
