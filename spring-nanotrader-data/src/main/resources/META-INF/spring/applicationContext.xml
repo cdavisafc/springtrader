@@ -62,6 +62,7 @@
 
 	<import
 		resource="classpath:/META-INF/spring/integration/amqp-data-outbound-context.xml" />
+
 	<bean
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		id="entityManagerFactory">
@@ -86,6 +87,11 @@
 		</property>
 	</bean>
 
+		<util:properties id="dbPropertiesBean">
+			<prop key="use_scrollable_resultset">false</prop>
+			<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<prop key="hb2ddl.auto">create</prop>
+		</util:properties>
 
 	<beans profile="default,test">
 		<util:properties id="dbPropertiesBean">
@@ -116,6 +122,28 @@
 			<property name="minEvictableIdleTimeMillis" value="1800000" />
 			<property name="defaultTransactionIsolation" value="2" />
 			<property name="validationQuery" value="SELECT version();" />
+		</bean>
+	</beans>
+	
+	<beans profile="mysql">
+		<util:properties id="dbPropertiesBean">
+			<prop key="use_scrollable_resultset">true</prop>
+			<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<prop key="hb2ddl.auto">validate</prop>
+		</util:properties>
+		<bean class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close" id="dataSource">
+			<property name="driverClassName" value="${mysql.database.driverClassName}" />
+			<property name="url" value="${mysql.database.url}" />
+			<property name="username" value="${database.username}" />
+			<property name="password" value="${database.password}" />
+			<property name="defaultTransactionIsolation" value="2" />
+			<property name="testOnBorrow" value="true" />
+			<property name="testOnReturn" value="true" />
+			<property name="testWhileIdle" value="true" />
+			<property name="timeBetweenEvictionRunsMillis" value="1800000" />
+			<property name="numTestsPerEvictionRun" value="3" />
+			<property name="minEvictableIdleTimeMillis" value="1800000" />
 		</bean>
 	</beans>
 
@@ -151,22 +179,32 @@
 	</beans>
 
 
-	<beans profile="jndi">
+	<!--  <beans profile="jndi">
 		<util:properties id="dbPropertiesBean">
 			<prop key="use_scrollable_resultset">false</prop>
 			<prop key="dialect">org.hibernate.dialect.DerbyDialect</prop>
 			<prop key="hb2ddl.auto">validate</prop>
 		</util:properties>
 		<jee:jndi-lookup id="dataSource"  jndi-name="jdbc/nanodb" />
-	</beans>
+	</beans>  -->
+	
+	 <!-- <beans profile="jndiMysql">
+		<util:properties id="dbPropertiesBean">
+			<prop key="use_scrollable_resultset">false</prop>
+			<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<prop key="hb2ddl.auto">validate</prop>
+			<prop key="defaultTransactionIsolation">2</prop>
+		</util:properties>
+		<jee:jndi-lookup id="dataSource"  jndi-name="jdbc/nanodb" />
+	</beans>  -->
 
-    <beans profile="jndiPostgresql">
+    <!-- <beans profile="jndiPostgresql">
         <util:properties id="dbPropertiesBean">
             <prop key="use_scrollable_resultset">true</prop>
             <prop key="dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
             <prop key="hb2ddl.auto">validate</prop>
         </util:properties>
         <jee:jndi-lookup id="dataSource"  jndi-name="jdbc/nanodb" />
-    </beans>
+    </beans>  -->
 
 </beans>
