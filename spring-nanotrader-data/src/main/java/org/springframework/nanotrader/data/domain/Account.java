@@ -55,14 +55,16 @@ public class Account implements Serializable {
 	private Date creationdate;
 
 	@Column(name = "openbalance", precision = 14, scale = 2)
-	private BigDecimal openbalance;
+//	private BigDecimal openbalance;
+	private double db_openbalance;
 
 	@Column(name = "logoutcount")
 	@NotNull
 	private Integer logoutcount;
 
 	@Column(name = "balance", precision = 14, scale = 2)
-	private BigDecimal balance;
+//	private BigDecimal balance;
+	private double db_balance;
 
 	@Column(name = "lastlogin")
 	@Temporal(TemporalType.DATE)
@@ -104,13 +106,23 @@ public class Account implements Serializable {
 		this.creationdate = creationdate;
 	}
 
+	/* ------------- */
 	public BigDecimal getOpenbalance() {
-		return openbalance;
+		return BigDecimal.valueOf(this.db_openbalance);
 	}
 
 	public void setOpenbalance(BigDecimal openbalance) {
-		this.openbalance = openbalance;
+		this.db_openbalance = openbalance.doubleValue();
 	}
+	
+	public double getDb_openbalance() {
+		return this.db_openbalance;
+	}
+
+	public void setDb_openbalance(double db_openbalance) {
+		this.db_openbalance = db_openbalance;
+	}
+	/* ------------- */
 
 	public Integer getLogoutcount() {
 		return logoutcount;
@@ -120,13 +132,23 @@ public class Account implements Serializable {
 		this.logoutcount = logoutcount;
 	}
 
+	/* ------------- */
+	public double getDb_balance() {
+		return this.db_balance;
+	}
+	
+	public void setDb_balance(double db_balance) {
+		this.db_balance = db_balance;
+	}
+	
 	public BigDecimal getBalance() {
-		return balance;
+		return BigDecimal.valueOf(this.db_balance);
 	}
 
 	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
+		this.db_balance = balance.doubleValue();
 	}
+	/* ------------- */
 
 	public Date getLastlogin() {
 		return lastlogin;
@@ -162,8 +184,8 @@ public class Account implements Serializable {
 	@Override
 	public String toString() {
 		return "Account [creationdate=" + creationdate + ", openbalance="
-				+ openbalance + ", logoutcount=" + logoutcount + ", balance="
-				+ balance + ", lastlogin=" + lastlogin + ", logincount="
+				+ db_openbalance + ", logoutcount=" + logoutcount + ", balance="
+				+ db_balance + ", lastlogin=" + lastlogin + ", logincount="
 				+ logincount + ", accountid=" + accountid + "]";
 	}
 

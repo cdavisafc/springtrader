@@ -54,11 +54,13 @@ public class Holding implements Serializable {
     private Set<Order> orders;
 
 	@Column(name = "purchaseprice", precision = 14, scale = 2)
-    private BigDecimal purchaseprice;
+    //private BigDecimal purchaseprice;
+	private double db_purchaseprice;
 
 	@Column(name = "quantity", precision = 14, scale = 0)
     @NotNull
-    private BigDecimal quantity;
+    //private BigDecimal quantity;
+    private double db_quantity;
 
 	@Column(name = "purchasedate")
     @Temporal(TemporalType.DATE)
@@ -79,21 +81,41 @@ public class Holding implements Serializable {
         this.orders = orders;
     }
 
+	/* ------------- */
+	public double getDb_purchaseprice() {
+        return this.db_purchaseprice;
+    }
+
+	public void setPurchaseprice(double db_purchaseprice) {
+        this.db_purchaseprice = db_purchaseprice;
+    }
+	
 	public BigDecimal getPurchaseprice() {
-        return purchaseprice;
+        return BigDecimal.valueOf(db_purchaseprice);
     }
 
 	public void setPurchaseprice(BigDecimal purchaseprice) {
-        this.purchaseprice = purchaseprice;
+        this.db_purchaseprice = purchaseprice.doubleValue();
+    }
+	/* ------------- */
+	
+	/* ------------- */
+	public double getDb_quantity() {
+        return this.db_quantity;
     }
 
+	public void setQuantity(double db_quantity) {
+        this.db_quantity = db_quantity;
+    }
+	
 	public BigDecimal getQuantity() {
-        return quantity;
+        return BigDecimal.valueOf(db_quantity);
     }
 
 	public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
+        this.db_quantity = quantity.doubleValue();
     }
+	/* ------------- */
 
 	public Date getPurchasedate() {
         return purchasedate;
@@ -121,7 +143,7 @@ public class Holding implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Holding [holdingid=" + holdingid + ", purchaseprice=" + purchaseprice + ", quantity=" + quantity
+		return "Holding [holdingid=" + holdingid + ", purchaseprice=" + db_purchaseprice + ", quantity=" + db_quantity
 				+ ", purchasedate=" + purchasedate + ", quoteSymbol=" + quoteSymbol + "]";
 	}
 
