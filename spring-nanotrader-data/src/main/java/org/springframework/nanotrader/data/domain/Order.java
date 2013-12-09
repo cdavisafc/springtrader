@@ -59,10 +59,8 @@ public class Order implements Serializable {
     @JoinColumn(name = "holding_holdingid", referencedColumnName = "holdingid")
     private Holding holdingHoldingid;
 
-	//@Column(name = "orderfee", precision = 14, scale = 2)
 	@Column(name = "orderfee")
-    //private BigDecimal orderfee;
-	private double db_orderfee;
+    private BigDecimal orderfee;
 
 	@Column(name = "completiondate")
     @Temporal(TemporalType.DATE)
@@ -75,15 +73,12 @@ public class Order implements Serializable {
 	@Column(name = "orderstatus", length = 250)
     private String orderstatus;
 
-	//@Column(name = "price", precision = 14, scale = 2)
 	@Column(name = "price")
-    //private BigDecimal price;
-	private double db_price;
+    private BigDecimal price;
 
 	@Column(name = "quantity")
     @NotNull
-    //private BigDecimal quantity;
-    private double db_quantity;
+    private BigDecimal quantity;
 
 	@Column(name = "opendate")
     @Temporal(TemporalType.DATE)
@@ -91,7 +86,7 @@ public class Order implements Serializable {
     private Date opendate;
 	
 	@ManyToOne 
-	@JoinColumn(name = "quote_symbol", referencedColumnName = "symbol")
+	@JoinColumn(name = "quote_symbol", referencedColumnName = "quoteid")
     private Quote quote;
 
 
@@ -112,24 +107,13 @@ public class Order implements Serializable {
         this.holdingHoldingid = holdingHoldingid;
     }
 
-	/* ------------- */
-	public double getDb_orderfee() {
-        return this.db_orderfee;
-    }
-
-	public void setDb_orderfee(double db_orderfee) {
-        this.db_orderfee = db_orderfee;
-    }
-	
 	public BigDecimal getOrderfee() {
-        return BigDecimal.valueOf(db_orderfee);
+        return this.orderfee;
     }
 
 	public void setOrderfee(BigDecimal orderfee) {
-        this.db_orderfee = orderfee.doubleValue();
+        this.orderfee = orderfee;
     }
-	/* ------------- */
-	
 
 	public Date getCompletiondate() {
         return completiondate;
@@ -155,41 +139,21 @@ public class Order implements Serializable {
         this.orderstatus = orderstatus;
     }
 
-	/* ------------- */
-	public double getDb_price() {
-        return this.db_price;
-    }
-
-	public void setDb_price(double db_price) {
-        this.db_price = db_price;
-    }
-	
 	public BigDecimal getPrice() {
-        return BigDecimal.valueOf(db_price);
+        return this.price;
     }
 
 	public void setPrice(BigDecimal price) {
-        this.db_price = price.doubleValue();
-    }
-	/* ------------- */
-
-	/* ------------- */
-	public double getDb_quantity() {
-        return this.db_quantity;
+        this.price = price;
     }
 
-	public void setDb_quantity(double db_quantity) {
-        this.db_quantity = db_quantity;
-    }
-	
 	public BigDecimal getQuantity() {
-        return BigDecimal.valueOf(db_quantity);
+        return this.quantity;
     }
 
 	public void setQuantity(BigDecimal quantity) {
-        this.db_quantity = quantity.doubleValue();
+        this.quantity = quantity;
     }
-	/* ------------- */
 
 	public Date getOpendate() {
         return opendate;
@@ -198,8 +162,6 @@ public class Order implements Serializable {
 	public void setOpendate(Date opendate) {
         this.opendate = opendate;
     }
-
-
 
 	public Quote getQuote() {
 		return quote;
@@ -211,9 +173,9 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Order [orderid=" + orderid + ", orderfee=" + db_orderfee + ", completiondate=" + completiondate
-				+ ", ordertype=" + ordertype + ", orderstatus=" + orderstatus + ", price=" + db_price + ", quantity="
-				+ db_quantity + ", opendate=" + opendate + "]";
+		return "Order [orderid=" + orderid + ", orderfee=" + orderfee + ", completiondate=" + completiondate
+				+ ", ordertype=" + ordertype + ", orderstatus=" + orderstatus + ", price=" + price + ", quantity="
+				+ quantity + ", opendate=" + opendate + "]";
 	}
 
 	

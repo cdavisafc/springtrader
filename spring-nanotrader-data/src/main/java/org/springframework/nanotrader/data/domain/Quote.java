@@ -24,10 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @SuppressWarnings("serial")
 @Entity
@@ -35,8 +32,6 @@ import org.hibernate.annotations.GenericGenerator;
 public class Quote implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-	//@GeneratedValue(generator="randomId")
-    //@GenericGenerator(name="randomId", strategy="hdb.RandomIdGenerator")
     @Column(name = "quoteid")
     private Integer quoteid;
 
@@ -48,135 +43,75 @@ public class Quote implements Serializable {
         this.quoteid = id;
     }
 
-	//@Column(name = "low", precision = 14, scale = 2)
 	@Column(name = "low")
-    //private BigDecimal low;
-	private double db_low;
+    private BigDecimal low;
 
-	//@Column(name = "open1", precision = 14, scale = 2)
 	@Column(name = "open1")
-	//private BigDecimal open1;
-	private double db_open1;
-
+	private BigDecimal open1;
+	
 	@Column(name = "volume")
     @NotNull
-    //private BigDecimal volume;
-    private double db_volume;
+    private BigDecimal volume;
 
-	//@Column(name = "price", precision = 14, scale = 2)
 	@Column(name = "price")
-    //private BigDecimal price;
-	private double db_price;
+	private BigDecimal price;
 
-	//@Column(name = "high", precision = 14, scale = 2)
 	@Column(name = "high")
-    //private BigDecimal high;
-	private double db_high;
+    private BigDecimal high;
 
 	@Column(name = "companyname", length = 250)
     private String companyname;
 
-	@Column(name = "symbol", length = 250)
+	@Column(name = "symbol", length = 250, unique = true)
     @NotNull
     private String symbol;
-
+	
 	@Column(name = "change1")
     @NotNull
-    //private BigDecimal change1;
-    private double db_change1;
-	
+    private BigDecimal change1;
+
     @Column(name = "version")
     private int version = 0;
 
-	/* ------------- */
-	public double getDb_low() {
-        return this.db_low;
-    }
-
-	public void setDb_low(double db_low) {
-        this.db_low = db_low;
-    }
-	
 	public BigDecimal getLow() {
-        return BigDecimal.valueOf(db_low);
+        return this.low;
     }
 
 	public void setLow(BigDecimal low) {
-        this.db_low = low.doubleValue();
-    }
-	/* ------------- */
-
-	/* ------------- */
-	public double getDb_open1() {
-        return this.db_open1;
+        this.low = low;
     }
 
-	public void setDb_open1(double db_open1) {
-        this.db_open1 = db_open1;
-    }
-	
 	public BigDecimal getOpen1() {
-        return BigDecimal.valueOf(db_open1);
+        return this.open1;
     }
 
 	public void setOpen1(BigDecimal open1) {
-        this.db_open1 = open1.doubleValue();
-    }
-	/* ------------- */
-	
-	/* ------------- */
-	public double getDb_volume() {
-        return this.db_volume;
+        this.open1 = open1;
     }
 
-	public void setDb_volume(double db_volume) {
-        this.db_volume = db_volume;
-    }
-	
 	public BigDecimal getVolume() {
-        return BigDecimal.valueOf(db_volume);
+        return this.volume;
     }
 
 	public void setVolume(BigDecimal volume) {
-        this.db_volume = volume.doubleValue();
-    }
-	/* ------------- */
-	
-	/* ------------- */
-	public double getDb_price() {
-        return this.db_price;
+        this.volume = volume;
     }
 
-	public void setDb_price(double db_price) {
-        this.db_price = db_price;
-    }
-	
 	public BigDecimal getPrice() {
-        return BigDecimal.valueOf(db_price);
+        return this.price;
     }
 
 	public void setPrice(BigDecimal price) {
-        this.db_price = price.doubleValue();
-    }
-	/* ------------- */
-	
-	/* ------------- */
-	public double getDb_high() {
-        return this.db_high;
+        this.price = price;
     }
 
-	public void setDb_high(double db_high) {
-        this.db_high = db_high;
-    }
-	
 	public BigDecimal getHigh() {
-        return BigDecimal.valueOf(db_high);
+        return this.high;
     }
 
 	public void setHigh(BigDecimal high) {
-        this.db_high = high.doubleValue();
+        this.high = high;
     }
-	/* ------------- */
 
 	public String getCompanyname() {
         return companyname;
@@ -194,23 +129,13 @@ public class Quote implements Serializable {
         this.symbol = symbol;
     }
 
-	/* ------------- */
-	public double getDb_change1() {
-        return this.db_change1;
-    }
-
-	public void setDb_change1(double db_change1) {
-        this.db_change1 = db_change1;
-    }
-	
 	public BigDecimal getChange1() {
-        return BigDecimal.valueOf(db_change1);
+        return this.change1;
     }
 
 	public void setChange1(BigDecimal change1) {
-        this.db_change1 = change1.doubleValue();
+        this.change1 = change1;
     }
-	/* ------------- */
 	
 	public int getVersion() {
         return version;
@@ -218,8 +143,8 @@ public class Quote implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Quote [quoteid=" + quoteid + ", low=" + db_low + ", open1=" + db_open1 + ", volume=" + db_volume + ", price="
-				+ db_price + ", high=" + db_high + ", companyname=" + companyname + ", symbol=" + symbol + ", change1="
-				+ db_change1 + ", version=" + version + "]";
+		return "Quote [quoteid=" + quoteid + ", low=" + low + ", open1=" + open1 + ", volume=" + volume + ", price="
+				+ price + ", high=" + high + ", companyname=" + companyname + ", symbol=" + symbol + ", change1="
+				+ change1 + ", version=" + version + "]";
 	}
 }

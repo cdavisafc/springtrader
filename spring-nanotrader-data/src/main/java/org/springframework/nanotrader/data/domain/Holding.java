@@ -53,14 +53,12 @@ public class Holding implements Serializable {
 	@OneToMany(mappedBy = "holdingHoldingid")
     private Set<Order> orders;
 
-	@Column(name = "purchaseprice", precision = 14, scale = 2)
-    //private BigDecimal purchaseprice;
-	private double db_purchaseprice;
+	@Column(name = "purchaseprice")
+    private BigDecimal purchaseprice;
 
-	@Column(name = "quantity", precision = 14, scale = 0)
+	@Column(name = "quantity")
     @NotNull
-    //private BigDecimal quantity;
-    private double db_quantity;
+    private BigDecimal quantity;
 
 	@Column(name = "purchasedate")
     @Temporal(TemporalType.DATE)
@@ -81,41 +79,21 @@ public class Holding implements Serializable {
         this.orders = orders;
     }
 
-	/* ------------- */
-	public double getDb_purchaseprice() {
-        return this.db_purchaseprice;
-    }
-
-	public void setPurchaseprice(double db_purchaseprice) {
-        this.db_purchaseprice = db_purchaseprice;
-    }
-	
 	public BigDecimal getPurchaseprice() {
-        return BigDecimal.valueOf(db_purchaseprice);
+        return this.purchaseprice;
     }
 
 	public void setPurchaseprice(BigDecimal purchaseprice) {
-        this.db_purchaseprice = purchaseprice.doubleValue();
-    }
-	/* ------------- */
-	
-	/* ------------- */
-	public double getDb_quantity() {
-        return this.db_quantity;
+        this.purchaseprice = purchaseprice;
     }
 
-	public void setQuantity(double db_quantity) {
-        this.db_quantity = db_quantity;
-    }
-	
 	public BigDecimal getQuantity() {
-        return BigDecimal.valueOf(db_quantity);
+        return this.quantity;
     }
 
 	public void setQuantity(BigDecimal quantity) {
-        this.db_quantity = quantity.doubleValue();
+        this.quantity = quantity;
     }
-	/* ------------- */
 
 	public Date getPurchasedate() {
         return purchasedate;
@@ -143,7 +121,7 @@ public class Holding implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Holding [holdingid=" + holdingid + ", purchaseprice=" + db_purchaseprice + ", quantity=" + db_quantity
+		return "Holding [holdingid=" + holdingid + ", purchaseprice=" + purchaseprice + ", quantity=" + quantity
 				+ ", purchasedate=" + purchasedate + ", quoteSymbol=" + quoteSymbol + "]";
 	}
 

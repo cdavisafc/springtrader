@@ -1,0 +1,2 @@
+hdb.HdbServiceInfoCreator
+org.cloudfoundry.samples.springtrader.cloud.UserProvidedRabbitMQServiceInfoCreator
