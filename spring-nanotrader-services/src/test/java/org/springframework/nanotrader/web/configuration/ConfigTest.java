@@ -17,10 +17,12 @@ package org.springframework.nanotrader.web.configuration;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.nanotrader.service.configuration.MappingConfig;
 import org.springframework.nanotrader.service.configuration.ServiceConfig;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  *  Loads app config and service config to validate overall configurations. WebConfig is excluded here since
@@ -31,6 +33,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(classes = { ServiceConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class ConfigTest {
 	@Test

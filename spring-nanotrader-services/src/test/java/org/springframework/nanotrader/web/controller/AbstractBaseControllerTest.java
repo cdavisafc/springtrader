@@ -15,24 +15,45 @@
  */
 package org.springframework.nanotrader.web.controller;
 
-import static org.springframework.test.web.server.setup.MockMvcBuilders.annotationConfigSetup;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.nanotrader.service.configuration.MappingConfig;
+import org.springframework.nanotrader.service.configuration.ServiceConfig;
 import org.springframework.nanotrader.web.configuration.ServiceTestConfiguration;
+import org.springframework.nanotrader.web.configuration.TestServletContext;
 import org.springframework.nanotrader.web.configuration.WebConfig;
-import org.springframework.test.web.server.MockMvc;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration("org.springframework.nanotrader.web.configuration.TestServletContext")
+@ContextConfiguration(classes = { TestServletContext.class, MappingConfig.class, ServiceTestConfiguration.class }, loader = AnnotationConfigContextLoader.class)
+@ActiveProfiles("test")
 public class AbstractBaseControllerTest {
 
-	protected static MockMvc mockMvc;
-	
-	@BeforeClass
-	public static void setup() {
+	protected MockMvc mockMvc;
+
+	@Autowired
+    protected WebApplicationContext wac;
+
+	@Before
+	public void setup() {
 		String warRootDir = "src/webapps";
 		boolean isClasspathRelative = false;
-		mockMvc = annotationConfigSetup(WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class)
-				.activateProfiles("test").configureWebAppRootDir(warRootDir, isClasspathRelative).build();
+		
+		
+		mockMvc = webAppContextSetup(wac).build();
+//		mockMvc = webAppContextSetup(WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class)
+//				.activateProfiles("test").configureWebAppRootDir(warRootDir, isClasspathRelative).build();
 	}
 
 }

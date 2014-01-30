@@ -15,15 +15,34 @@
  */
 package org.springframework.nanotrader.web.controller;
 
-import static org.springframework.test.web.server.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.server.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.server.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockServletContext;
+import org.springframework.nanotrader.service.configuration.MappingConfig;
+import org.springframework.nanotrader.service.configuration.ServiceConfig;
 import org.springframework.nanotrader.web.configuration.ServiceTestConfiguration;
+import org.springframework.nanotrader.web.configuration.TestServletContext;
+import org.springframework.nanotrader.web.configuration.WebConfig;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.context.ActiveProfiles;
+
 
 /**
  * AccountControllerTest tests the Account REST api 
@@ -32,13 +51,56 @@ import org.springframework.nanotrader.web.configuration.ServiceTestConfiguration
  * @author
  */
 
-public class AccountControllerTest extends AbstractSecureControllerTest {
+/*public class AccountControllerTest extends AbstractSecureControllerTest {
 	
 	@Test
 	public void getQuoteBySymbolJson() throws Exception {
 		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().mimeType(MediaType.APPLICATION_JSON))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.accountid").value(ServiceTestConfiguration.ACCOUNT_ID))
+				.andExpect(jsonPath("$.creationdate").value(ServiceTestConfiguration.DATE))
+				.andExpect(jsonPath("$.openbalance").value(ServiceTestConfiguration.ACCOUNT_OPEN_BALANCE.doubleValue()))
+				.andExpect(jsonPath("$.logoutcount").value(ServiceTestConfiguration.LOGOUT_COUNT.intValue()))
+				.andExpect(jsonPath("$.balance").value(ServiceTestConfiguration.ACCOUNT_BALANCE.doubleValue()))
+				.andExpect(jsonPath("$.lastlogin").value(ServiceTestConfiguration.DATE))
+				.andExpect(jsonPath("$.logincount").value(ServiceTestConfiguration.LOGIN_COUNT))
+				.andDo(print());
+	}
+	
+
+	
+}*/
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = { WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class }, loader = AnnotationConfigContextLoader.class)
+@ActiveProfiles("test")
+public class AccountControllerTest  {
+
+	private MockMvc mockMvc;
+
+	@Autowired
+    private WebApplicationContext wac;
+	
+	@Before
+	public void setup() {
+//		String warRootDir = "src/webapps";
+//		boolean isClasspathRelative = false;
+		
+		System.out.println("xxxxxxxxxxxxxxxxxx");
+		mockMvc = webAppContextSetup(wac).build();
+
+//		mockMvc = webAppContextSetup(WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class)
+//				.activateProfiles("test").configureWebAppRootDir(warRootDir, isClasspathRelative).build();
+	}
+
+	
+	@Test
+	public void getQuoteBySymbolJson() throws Exception {
+		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.accountid").value(ServiceTestConfiguration.ACCOUNT_ID))
 				.andExpect(jsonPath("$.creationdate").value(ServiceTestConfiguration.DATE))
 				.andExpect(jsonPath("$.openbalance").value(ServiceTestConfiguration.ACCOUNT_OPEN_BALANCE.doubleValue()))

@@ -31,6 +31,7 @@ import org.springframework.nanotrader.web.exception.ExtendedExceptionHandlerExce
 import org.springframework.nanotrader.web.exception.GlobalExceptionHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
@@ -44,6 +45,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @author Brian Dussault
  */
 
+@EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = { "org.springframework.nanotrader.web" })
 @Import(ServiceConfig.class)

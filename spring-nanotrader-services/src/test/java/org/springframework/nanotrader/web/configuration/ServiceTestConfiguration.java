@@ -34,6 +34,7 @@ import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.nanotrader.data.domain.Account;
 import org.springframework.nanotrader.data.domain.Accountprofile;
 import org.springframework.nanotrader.data.domain.Holding;
@@ -124,7 +125,7 @@ public class ServiceTestConfiguration  {
 	public static String TOTAL_RECORDS = "totalRecords";
 	public static Long RESULT_COUNT  = new Long(1);
 	public static String DATE = new SimpleDateFormat("yyyy-MM-dd").format(new Date(1329759342904l));
-	
+		
 	@Bean 
 	public TradingService tradingService() {
 		TradingService tradingService = Mockito.mock(TradingService.class);
