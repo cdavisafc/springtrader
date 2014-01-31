@@ -45,7 +45,7 @@ public class OrderControllerTest extends AbstractSecureControllerTest {
 	public void getOrderByIdJson() throws Exception {
 		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID + "/order/999/").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.orderid").value(ServiceTestConfiguration.ORDER_ID))
 				.andExpect(jsonPath("$.completiondate").value(ServiceTestConfiguration.DATE))
 				.andExpect(jsonPath("$.opendate").value(ServiceTestConfiguration.DATE))
@@ -70,7 +70,7 @@ public class OrderControllerTest extends AbstractSecureControllerTest {
 	public void getOrders() throws Exception {
 		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID + "/orders").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.results.[0].orderid").value(ServiceTestConfiguration.ORDER_ID))
 				.andExpect(jsonPath("$.results.[0].completiondate").value(ServiceTestConfiguration.DATE))
 				.andExpect(jsonPath("$.results.[0].opendate").value(ServiceTestConfiguration.DATE))
@@ -96,7 +96,7 @@ public class OrderControllerTest extends AbstractSecureControllerTest {
 	public void getClosedOrders() throws Exception {
 		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID + "/orders").accept(MediaType.APPLICATION_JSON).param("status", "closed"))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.results.[0].orderid").value(ServiceTestConfiguration.ORDER_ID))
 				.andExpect(jsonPath("$.results.[0].completiondate").value(ServiceTestConfiguration.DATE))
 				.andExpect(jsonPath("$.results.[0].opendate").value(ServiceTestConfiguration.DATE))

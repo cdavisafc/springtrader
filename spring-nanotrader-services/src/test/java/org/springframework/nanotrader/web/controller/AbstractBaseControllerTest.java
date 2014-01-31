@@ -18,26 +18,24 @@ package org.springframework.nanotrader.web.controller;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.nanotrader.service.configuration.MappingConfig;
-import org.springframework.nanotrader.service.configuration.ServiceConfig;
 import org.springframework.nanotrader.web.configuration.ServiceTestConfiguration;
-import org.springframework.nanotrader.web.configuration.TestServletContext;
 import org.springframework.nanotrader.web.configuration.WebConfig;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration("org.springframework.nanotrader.web.configuration.TestServletContext")
-@ContextConfiguration(classes = { TestServletContext.class, MappingConfig.class, ServiceTestConfiguration.class }, loader = AnnotationConfigContextLoader.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = { WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class })
 @ActiveProfiles("test")
+@Ignore
 public class AbstractBaseControllerTest {
 
 	protected MockMvc mockMvc;
@@ -47,13 +45,7 @@ public class AbstractBaseControllerTest {
 
 	@Before
 	public void setup() {
-		String warRootDir = "src/webapps";
-		boolean isClasspathRelative = false;
-		
-		
 		mockMvc = webAppContextSetup(wac).build();
-//		mockMvc = webAppContextSetup(WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class)
-//				.activateProfiles("test").configureWebAppRootDir(warRootDir, isClasspathRelative).build();
 	}
 
 }
