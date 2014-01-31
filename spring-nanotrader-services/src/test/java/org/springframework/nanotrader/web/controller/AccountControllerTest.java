@@ -51,13 +51,13 @@ import org.springframework.test.context.ActiveProfiles;
  * @author
  */
 
-/*public class AccountControllerTest extends AbstractSecureControllerTest {
-	
+public class AccountControllerTest extends AbstractSecureControllerTest {
+
 	@Test
 	public void getQuoteBySymbolJson() throws Exception {
 		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.accountid").value(ServiceTestConfiguration.ACCOUNT_ID))
 				.andExpect(jsonPath("$.creationdate").value(ServiceTestConfiguration.DATE))
 				.andExpect(jsonPath("$.openbalance").value(ServiceTestConfiguration.ACCOUNT_OPEN_BALANCE.doubleValue()))
@@ -67,50 +67,4 @@ import org.springframework.test.context.ActiveProfiles;
 				.andExpect(jsonPath("$.logincount").value(ServiceTestConfiguration.LOGIN_COUNT))
 				.andDo(print());
 	}
-	
-
-	
-}*/
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = { WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class }, loader = AnnotationConfigContextLoader.class)
-@ActiveProfiles("test")
-public class AccountControllerTest  {
-
-	private MockMvc mockMvc;
-
-	@Autowired
-    private WebApplicationContext wac;
-	
-	@Before
-	public void setup() {
-//		String warRootDir = "src/webapps";
-//		boolean isClasspathRelative = false;
-		
-		System.out.println("xxxxxxxxxxxxxxxxxx");
-		mockMvc = webAppContextSetup(wac).build();
-
-//		mockMvc = webAppContextSetup(WebConfig.class, MappingConfig.class, ServiceTestConfiguration.class)
-//				.activateProfiles("test").configureWebAppRootDir(warRootDir, isClasspathRelative).build();
-	}
-
-	
-	@Test
-	public void getQuoteBySymbolJson() throws Exception {
-		mockMvc.perform(get("/account/" + ServiceTestConfiguration.ACCOUNT_ID).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.accountid").value(ServiceTestConfiguration.ACCOUNT_ID))
-				.andExpect(jsonPath("$.creationdate").value(ServiceTestConfiguration.DATE))
-				.andExpect(jsonPath("$.openbalance").value(ServiceTestConfiguration.ACCOUNT_OPEN_BALANCE.doubleValue()))
-				.andExpect(jsonPath("$.logoutcount").value(ServiceTestConfiguration.LOGOUT_COUNT.intValue()))
-				.andExpect(jsonPath("$.balance").value(ServiceTestConfiguration.ACCOUNT_BALANCE.doubleValue()))
-				.andExpect(jsonPath("$.lastlogin").value(ServiceTestConfiguration.DATE))
-				.andExpect(jsonPath("$.logincount").value(ServiceTestConfiguration.LOGIN_COUNT))
-				.andDo(print());
-	}
-	
-
-	
 }

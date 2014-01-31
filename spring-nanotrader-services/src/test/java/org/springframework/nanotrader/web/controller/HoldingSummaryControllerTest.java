@@ -37,7 +37,7 @@ public class HoldingSummaryControllerTest extends AbstractSecureControllerTest {
 	public void getHoldingSummaryJson() throws Exception {
 		mockMvc.perform(get("/account/"+ ServiceTestConfiguration.ACCOUNT_ID + "/holdingSummary").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andDo(print());
 	}
 
